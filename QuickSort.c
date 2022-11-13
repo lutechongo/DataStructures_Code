@@ -10,17 +10,20 @@ void swap (int * x, int * y){
 }
 
 int partition (int * a, int start, int stop) {        //puts an element in its correct position. everthing on left and right of it is lesser and greater respectively
-    int pivot = a[start];
-    int i = start + 1;                                //position right next to start. everything on left of i is less than pivot. 
-    int j = stop;                                     //last position. everything to the right of j is greater than pivot
+    int pivot = a[stop];
+    int i = start - 1; 
+    int j;                               //position right next to start. everything on left of i is less than pivot.                                     //last position. everything to the right of j is greater than pivot
 
-    for (j = i; i<j; j++){
-        if (a[j] <+ pivot) {
-            swap(&a[i], &a[start]);
+    for (j = start; j < stop; j++){
+        if (a[j] <= pivot) {
             i++;
+            swap(&a[i], &a[j]);
         }
     }
-    swap(&a[i], &a[start])
+    swap(&a[i + 1], &a[stop]);
+
+    return( i + 1);
+}
     /*while (i <= j) {
         if (a[i] > pivot) {
            i = i+1;}
@@ -36,14 +39,14 @@ void quickSort(int * a, int start, int stop) {
     if (start < stop) {
 
         int pivot = partition(a, start, stop);          //gives us a list with en elemnt in its right postion. less than stuff on right. greater than stuff is greater
-        quickSort(a, start, pivot-1);                   //partitions the left side
-        quickSort(a, pivot+1, stop);                    //partitions the right side
+        quickSort(a, start, pivot - 1);                   //partitions the left side
+        quickSort(a, pivot + 1, stop);                    //partitions the right side
     }
 }
 
-void quicksort(int * a, int n) {
+/*void quicksort(int * a, int n) {
     quickSort(a, 0, n-1);
-}
+}*/
 
 //create array
 int * createArray(int n){                                //function array that consists of intergers and its parameters are the number of elements, n, it will create
@@ -53,13 +56,12 @@ int * createArray(int n){                                //function array that c
         for(int i=0; i<n; i++) {(t[i] = rand()%150);}    //i is a counter that ensures that t is printed 10 times. t is a random number generated from the rand
     }
     return t;               
-}
+};
 
 //print array
 void printArray(int * a, int n) {
-    int i;
-    printf("Unsorted Array = ");
-    for (i=0; i<n; i++) 
+    printf("Unsorted =");
+    for (int i = 0; i < n; i++) 
     {
         printf(i?", %d":"%d", a[i]);
     }
@@ -76,8 +78,8 @@ int main(int argc, char const *argv[]){
     a = createArray(n);                                 //a, our list, is being assigned the function that will create it
     printArray(a, n);
 
-    quicksort(a, n);
-    printf("Sorted from");
+    quickSort(a, 0, n - 1);
+    printf("Sorted = ");
     printArray(a, n);
 
     free(a);
