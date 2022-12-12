@@ -8,7 +8,6 @@ struct node{
 
 struct node* start = NULL;
 
-//I dont want to traverse for add an item last position, i will use last->next
 struct node* last = NULL;
 struct node* temp;
 
